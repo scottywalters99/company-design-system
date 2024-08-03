@@ -1,0 +1,37 @@
+[
+  {
+    "name": "ce",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/ce.svg"
+  },
+  {
+    "name": "ecrep",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/ecrep.svg"
+  },
+  {
+    "name": "instruction",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/instruction.svg"
+  },
+  {
+    "name": "manufacturer",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/manufacturer.svg"
+  },
+  {
+    "name": "md",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/md.svg"
+  },
+  {
+    "name": "rxonly",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/rxonly.svg"
+  },
+  {
+    "name": "support",
+    "category": "Regulatory",
+    "url": "/images/guide/foundations/icons/regulatory/support.svg"
+  }
+]

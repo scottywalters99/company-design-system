@@ -1,0 +1,22 @@
+[
+  {
+    "name": "cancel",
+    "category": "Actions",
+    "url": "/images/guide/foundations/icons/actions/cancel.svg"
+  },
+  {
+    "name": "edit",
+    "category": "Actions",
+    "url": "/images/guide/foundations/icons/actions/edit.svg"
+  },
+  {
+    "name": "save",
+    "category": "Actions",
+    "url": "/images/guide/foundations/icons/actions/save.svg"
+  },
+  {
+    "name": "trash",
+    "category": "Actions",
+    "url": "/images/guide/foundations/icons/actions/trash.svg"
+  }
+]

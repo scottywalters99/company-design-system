@@ -1,0 +1,12 @@
+/* Tabls plugin
+-------------------------- */
+.el-tabs--border-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.el-tabs--border-card > .el-tabs__header {
+  background-color: transparent !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  margin: 2rem 0 !important;
+}

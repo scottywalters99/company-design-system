@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Button",
+    "description": "Triggers an event or action.",
+    "img": "/images/icons/button.svg",
+    "link": "/components/button"
+  },
+  {
+    "title": "Standard Component",
+    "description": "This is a component from the package in /src.",
+    "img": "/images/icons/standard-component.svg",
+    "link": "/components/standard-component"
+  }
+]

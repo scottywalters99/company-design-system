@@ -1,0 +1,16 @@
+{
+  "name": "company-design-system",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-medium-zoom": "^2.0.0-beta.35",
+    "@vuepress/plugin-register-components": "^2.0.0-beta.35",
+    "@vuepress/plugin-search": "^2.0.0-beta.35",
+    "@vuepress/plugin-shiki": "^2.0.0-beta.35",
+    "resize-observer-polyfill": "^1.5.1",
+    "vuepress": "^2.0.0-beta.35"
+  }
+}

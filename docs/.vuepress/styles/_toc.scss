@@ -1,0 +1,36 @@
+/* Table of contents
+------------------------------*/
+.table-of-contents {
+  margin-top: 32px;
+  ul {
+    padding-left: 0;
+  }
+  ul:first-child {
+    padding-left: 0;
+    // if list items are > 6 create two columns
+    display: grid;
+    grid-template-rows: repeat(6, min-content);
+    grid-auto-flow: column;
+  }
+  li {
+    list-style: none;
+  }
+  li:before {
+    color: var(--c-text);
+    content: '\21B3';
+    position: absolute;
+  }
+  li a {
+    color: var(--c-text);
+    display: inline-block;
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    margin-left: 1.5rem;
+    position: relative;
+    text-decoration: none !important;
+    transition: color 0.11s;
+  }
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "name": "back",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/back-arrow.svg"
+  },
+  {
+    "name": "category",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/category.svg"
+  },
+  {
+    "name": "chart",
+    "category": "Status",
+    "url": "/images/guide/foundations/icons/navigation/chart.svg"
+  },
+  {
+    "name": "export",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/export.svg"
+  },
+  {
+    "name": "favorites",
+    "category": "Status",
+    "url": "/images/guide/foundations/icons/navigation/favorites.svg"
+  },
+  {
+    "name": "home",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/home.svg"
+  },
+  {
+    "name": "machine",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/linac.svg"
+  },
+  {
+    "name": "more",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/more-dropdown-menu.svg"
+  },
+  {
+    "name": "patient",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/patient.svg"
+  },
+  {
+    "name": "print",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/print.svg"
+  },
+  {
+    "name": "review",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/review.svg"
+  },
+  {
+    "name": "tasks",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/tasks.svg"
+  },
+  {
+    "name": "upload",
+    "category": "Navigation",
+    "url": "/images/guide/foundations/icons/navigation/file-upload.svg"
+  }
+]

@@ -1,0 +1,107 @@
+name: 'PR Standards Check'
+on:
+  pull_request:
+    types:
+      - 'opened'
+      - 'edited'
+      - 'reopened'
+      - 'synchronize'
+
+jobs:
+  check-pr-title:
+    name: 'PR Title'
+    runs-on: 'ubuntu-20.04'
+    steps:
+      - uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+      - name: 'Install Dependencies'
+        # yamllint disable rule:line-length
+        run: |
+          npm install @commitlint/config-conventional
+          echo "module.exports = {extends: ['@commitlint/config-conventional'], rules: { 'subject-case': [0,'always',['sentence-case']],'header-max-length': [2, 'always', 120], 'body-max-line-length': [0, 'always', 120] }};" > commitlint.config.js
+        # yamllint enable rule:line-length
+      - uses: 'JulienKode/pull-request-name-linter-action@e7c27a9a91d8547abb078a6b2865e62b52fe885b'
+      - name: 'Get calculated next version based on commit history'
+        id: 'nextVersion'
+        uses: 'mathieudutour/github-tag-action@d745f2e74aaf1ee82e747b181f7a0967978abee0'
+        with:
+          github_token: '${{ secrets.REPO_ONLY }}'
+          release_branches: 'main'
+          default_bump: 'patch'
+          dry_run: 'true'
+      - name: 'Checkout PR title release type action'
+        uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+        with:
+          repository: 'add-repo-actions/ci-action-pr-title-release-type'
+          ref: 'v0.0.2'
+          token: '${{ secrets.REPO_ONLY }}'
+          path: '.github/actions/ci-action-pr-title-release-type'
+      - name: 'Run pr-title-release-type action'
+        uses: './.github/actions/ci-action-pr-title-release-type'
+        with:
+          pr-title: '${{ github.event.pull_request.title }}'
+          commit-release-type: '${{ steps.nextVersion.outputs.release_type }}'
+          default-type: 'patch'
+      - name: 'Check PR/commit messages for JIRA ticket'
+        uses: gsactions/commit-message-checker@f27f413dcf8ebcb469d2ce4ae4e45e131d105de6
+        with:
+          pattern: '[A-Za-z]{2,}-\d{1,}'
+          flags: 'g'
+          error: 'The PR title should include a JIRA ticket, for example DEVOPS-231'
+          excludeDescription: true
+
+  check-pr-commits:
+    name: 'PR Commit Messages'
+    runs-on: 'ubuntu-20.04'
+    steps:
+      - uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+        with:
+          fetch-depth: 0
+      - name: 'Configure commit lint'
+        # yamllint disable rule:line-length
+        run: |
+          # yamllint disable-line rule:line-length
+          echo "module.exports = {extends: ['@commitlint/config-conventional'], rules: { 'subject-case': [0,'always',['sentence-case']],'header-max-length': [2, 'always', 120], 'body-max-line-length': [0, 'always', 120] }};" > commitlint.config.js
+        # yamllint enable rule:line-length
+      - uses: 'wagoid/commitlint-github-action@296247dfa6a133767fe0d64d08fb66326047b680'
+  apply-labels:
+    name: 'PR Labels'
+    runs-on: 'ubuntu-20.04'
+    steps:
+      - uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+      - uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+        name: 'Checkout Rules for Labeling'
+        with:
+          repository: 'add-repo-actions/ci-pr-standard-rules'
+          ref: 'v0.1.0'
+          token: '${{ secrets.REPO_ONLY }}'
+          path: './.github/pr-standards'
+      - name: 'Apply Herald rules'
+        uses: 'gagoar/use-herald-action@b25c58b5fa2c44311085ee3f4fa38f41b192e961'
+        with:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          rulesLocation: '.github/pr-standards/rules/herald_rule_*.json'
+          base: 'main'
+          DEBUG: '*'
+  hotfix-commit:
+    name: 'Hotfix Commit Lint'
+    runs-on: 'ubuntu-20.04'
+    if: ${{ contains(github.base_ref, 'hotfix-') }}
+    steps:
+      - uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+        with:
+          fetch-depth: 0
+      - name: 'Get calculated next version based on commit history'
+        id: 'calculated-next-version'
+        uses: 'mathieudutour/github-tag-action@d745f2e74aaf1ee82e747b181f7a0967978abee0'
+        with:
+          github_token: '${{ secrets.REPO_ONLY }}'
+          release_branches: 'main'
+          default_bump: 'patch'
+          dry_run: 'true'
+      - name: 'Fail when not patch'
+        if: |-
+          ${{ steps.calculated-next-version.outputs.release_type != 'patch' }}
+        run: |
+          echo "Calculated release type: ${{ steps.calculated-next-version.outputs.release_type }}"
+          echo "::error::Check your commits, they are resulting in a release greater than a patch release!!"
+          exit 1

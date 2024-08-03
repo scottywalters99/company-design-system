@@ -1,0 +1,57 @@
+@import './overview-grid.scss';
+@import './styles.scss';
+@import './toc.scss';
+
+:root {
+  scroll-behavior: smooth;
+  --c-brand: #026eb9;
+  --c-brand-light: #0274c5;
+  --c-bg: #f8f8f8;
+  --c-bg-navbar: #fff;
+  --c-bg-sidebar: #fff;
+  --content-width: 66.667%;
+  --sidebar-width: 256px;
+  --c-text: #161616;
+  --c-text-lighter: #525252;
+  --font-family: 'Inter Var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
+  --medium-zoom-bg-color: #ffffff;
+
+  // Custom variables
+  --ds-text-primary: #161616;
+  --ds-text-secondary: #172b4d;
+  --ds-color-danger: #da1e28;
+  --ds-color-success: #24a148;
+
+  p,
+  ul,
+  ol {
+    line-height: 1.5;
+  }
+  nav.page-nav {
+    display: none;
+  }
+  .page-meta .meta-item .meta-item-label {
+    font-weight: 400;
+  }
+  .page-meta {
+    margin: 0 2.5rem auto;
+  }
+}
+
+.theme-container.full-width {
+  --content-width: 100%;
+}
+
+html.dark {
+  --c-brand: #026eb9;
+  --c-brand-light: #0274c5;
+  --c-bg-navbar: #22272e;
+  --c-bg-sidebar: #22272e;
+
+  & .sidebar-item:not(.sidebar-heading).active {
+    background-color: #1a1e23;
+    color: #fff;
+  }
+}

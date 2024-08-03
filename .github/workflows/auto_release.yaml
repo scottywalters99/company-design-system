@@ -1,0 +1,60 @@
+name: 'Create Release'
+
+on:
+  push:
+    branches: ['main']
+    paths-ignore:
+      - '.github/**'
+
+jobs:
+  create_release:
+    runs-on: 'ubuntu-20.04'
+    name: 'Create Release'
+    steps:
+      - uses: 'actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579'
+        with:
+          fetch-depth: 0
+      - name: 'Action Get Latest Tag'
+        uses: 'actions-ecosystem/action-get-latest-tag@12e889eb7760061c988f66a45bbd2d5010772630'
+        id: 'get-latest-tag'
+        with:
+          semver_only: true
+      - name: 'Determine default bump'
+        id: 'bump'
+        run: |
+          LATEST_TAG=${{ steps.get-latest-tag.outputs.tag }}
+          if [ "$LATEST_TAG" = "v0.0.0" ]; then
+              echo "::set-output name=type::major"
+          else
+              echo "::set-output name=type::patch"
+          fi
+      - name: 'Bump version and push tag'
+        id: 'tag_version'
+        uses: 'mathieudutour/github-tag-action@d745f2e74aaf1ee82e747b181f7a0967978abee0'
+        with:
+          github_token: '${{ secrets.REPO_ONLY }}'
+          release_branches: 'main'
+          default_bump: '${{ steps.bump.outputs.type }}'
+      - name: 'Generate New version changelog'
+        if: |-
+          ${{ steps.get-latest-tag.outputs.tag != 'v0.0.0' }}
+        uses: 'charmixer/auto-changelog-action@b25e89c9410e03189f0d48b02b3a8caad6e78015'
+        with:
+          token: '${{ secrets.REPO_ONLY }}'
+          release_branch: 'main'
+          since_tag: '${{ steps.get-latest-tag.outputs.tag }}'
+          output: 'release.md'
+      - name: 'Read incremental changelog'
+        if: |-
+          ${{ steps.get-latest-tag.outputs.tag != 'v0.0.0' }}
+        id: 'changelog'
+        uses: 'juliangruber/read-file-action@ebfa650188272343fef925480eb4d18c5d49b925'
+        with:
+          path: './release.md'
+      - name: 'Create a GitHub release'
+        uses: 'softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5'
+        env:
+          GITHUB_TOKEN: '${{ secrets.REPO_ONLY }}'
+        with:
+          tag_name: '${{ steps.tag_version.outputs.new_tag }}'
+          body: '${{ steps.changelog.outputs.content }}'
